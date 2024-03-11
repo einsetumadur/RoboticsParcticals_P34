@@ -18,8 +18,8 @@ P = vPMP.*(nPMP/nvPMP) + PM
 
 %% 7.2 1C
 syms phi_A phi_B LENGTH_A LENGTH_B LENGTH_C real
-P1 = LENGTH_A*[sin(phi_A);cos(phi_A)] + [0;LENGTH_C/2]; 
-P2 = LENGTH_A*[sin(phi_B);cos(phi_B)] - [0;LENGTH_C/2]; 
+P1 = LENGTH_A*[sin(phi_A);-cos(phi_A)] + [0;LENGTH_C/2]; 
+P2 = LENGTH_A*[sin(phi_B);-cos(phi_B)] - [0;LENGTH_C/2]; 
 PM = (P1+P2)./2;
 vPMP = [-(P2(2)-P1(2)); P2(1)-P1(1)];
 nvPMP = norm(vPMP,2);
@@ -32,5 +32,8 @@ syms F_x F_y real
 J = jacobian(P,[phi_A,phi_B]);
 Torques = J'*[F_x;F_y];
 bcincode = ccode(Torques,'File','./pentho_backcin.c');
+
+%%
+solve(diff(inv(J')) == [0,0],) 
 
 
