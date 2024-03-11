@@ -25,15 +25,16 @@ vPMP = [-(P2(2)-P1(2)); P2(1)-P1(1)];
 nvPMP = norm(vPMP,2);
 nPMP = sqrt(LENGTH_B^2-norm(P1-PM, 2)^2);
 P = vPMP.*(nPMP/nvPMP) + PM;
-fwcode = ccode(P,'File','./penthofwkin.c');
+fwcode = ccode(simplyfy(P),'File','./penthofwkin.c');
 
 %% 7.2 2B
 syms F_x F_y real
 J = jacobian(P,[phi_A,phi_B]);
 Torques = J'*[F_x;F_y];
+J = simplify(J);
 bcincode = ccode(Torques,'File','./pentho_backcin.c');
 
 %%
-solve(diff(inv(J')) == [0,0],) 
+solve(diff(inv(J')) == [0,0]) 
 
 

@@ -15,12 +15,12 @@ n = [-v_12(2); v_12(1)];
 n = n / norm(n);
 alpha = sqrt(LENGTH_B^2 - 1/4 * dot(v_12, v_12));
 P = P_M + alpha * n;
-ccode(P)
+ccode(P,'File','mathieux_fwkin.c')
 
 J = [diff(P(1), phi_A), diff(P(1), phi_B);
      diff(P(2), phi_A), diff(P(2), phi_B)];
 tau = J' * [F_x; F_y];
-ccode(tau)
+ccode(tau,'File','mathieux_bwcin.c')
 
 tau_val = subs(tau, ...
     [LENGTH_A, LENGTH_B, LENGTH_C, F_x, F_y, phi_A, phi_B], ...
