@@ -17,7 +17,7 @@ nPMP = sqrt(b^2-norm(P1-PM, 2)^2);
 P = vPMP.*(nPMP/nvPMP) + PM
 
 %% 7.2 1C
-syms phi_A phi_B LENGTH_A LENGTH_B LENGTH_C
+syms phi_A phi_B LENGTH_A LENGTH_B LENGTH_C real
 P1 = LENGTH_A*[sin(phi_A);cos(phi_A)] + [0;LENGTH_C/2]; 
 P2 = LENGTH_A*[sin(phi_B);cos(phi_B)] - [0;LENGTH_C/2]; 
 PM = (P1+P2)./2;
@@ -28,7 +28,7 @@ P = vPMP.*(nPMP/nvPMP) + PM;
 fwcode = ccode(P,'File','./penthofwkin.c');
 
 %% 7.2 2B
-syms F_x F_y
+syms F_x F_y real
 J = jacobian(P,[phi_A,phi_B]);
 Torques = J'*[F_x;F_y];
 bcincode = ccode(Torques,'File','./pentho_backcin.c');
